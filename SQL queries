@@ -1,0 +1,41 @@
+-- SQL Data Analysis on Job Applications
+
+-- 1. Applications by Status
+SELECT status, COUNT(*) AS total
+FROM applications
+GROUP BY status;
+
+-- 2. Response Rate
+SELECT 
+  COUNT(CASE WHEN status IN ('interview', 'offer') THEN 1 END) * 100.0 
+  / COUNT(*) AS response_rate
+FROM applications;
+
+-- 3. Applications Over Time
+SELECT DATE(applied_date) AS day, COUNT(*) AS total
+FROM applications
+GROUP BY day
+ORDER BY day;
+
+-- 4. Top Companies Applied To
+SELECT company, COUNT(*) AS total
+FROM applications
+GROUP BY company
+ORDER BY total DESC
+LIMIT 5;
+
+-- 5. Average Time to Response
+SELECT AVG(response_days) AS avg_response_time
+FROM applications
+WHERE response_days IS NOT NULL;
+
+-- 6. Outcome Breakdown
+SELECT 
+  CASE 
+    WHEN status = 'rejected' THEN 'Rejected'
+    WHEN status = 'interview' THEN 'Interview'
+    ELSE 'Other'
+  END AS category,
+  COUNT(*) AS total
+FROM applications
+GROUP BY category;

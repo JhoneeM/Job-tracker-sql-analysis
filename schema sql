@@ -1,0 +1,7 @@
+CREATE TABLE jobs (
+    id SERIAL PRIMARY KEY,
+    company VARCHAR(255),
+    role VARCHAR(255),
+    status VARCHAR(50),
+    applied_date DATE
+);
